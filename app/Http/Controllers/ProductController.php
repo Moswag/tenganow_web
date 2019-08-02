@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MyConstants;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -19,8 +20,8 @@ class ProductController extends Controller
 
 
     public function view_products(){
-        $products=Product::where('company_id',auth()->user()->id)->get();
-        return view('products.view_products',compact('products'));
+        $products=Product::where('company_id',auth()->user()->company_or_outlet_id)->get();
+        return view('server.company.products.view_products',compact('products'));
     }
 
 
@@ -47,12 +48,12 @@ class ProductController extends Controller
         $input['imagename']=$image->getClientOriginalName();
         $extension=$image->getClientOriginalExtension();
         $myfile=bcrypt($input['imagename']).'.'.$extension;
-        $destination = 'product_pics';
+        $destination = MyConstants::DIRECTORY_PRODUCT_PICS;
         $image->storeAs($destination, $myfile);
 
         $product=new Product();
         $product->name=$request->name;
-        $product->company_id=auth()->user()->id;
+        $product->company_id=auth()->user()->company_or_outlet_id;
         $product->price=$request->price;
         $product->description=$request->description;
         $product->discount=$request->discount;

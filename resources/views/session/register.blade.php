@@ -26,43 +26,43 @@
                     <div class="account-logo">
                         <a href="index-2.html"><img src="{{URL::to('assets/img/logo2.png')}}" alt="Tenga Now"></a>
                     </div>
+                    @if(Session::has('message'))
+                        <div class="alert alert-success">  {{Session::get('message')}}        </div>
+                    @endif
+                    @if(Session::has('error'))
+                        <div class="alert alert-success">  {{Session::get('error')}}        </div>
+                    @endif
                     <form method="post" action="{{route('register')}}" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="form-group form-focus">
-                            <label class="control-label">Company Name</label>
+                            <label class="control-label"> Name</label>
                             <input class="form-control floating" type="text" name="name" required>
                         </div>
                         <div class="form-group form-focus">
-                            <label class="control-label">Address</label>
-                            <input class="form-control floating" type="text" name="address" required>
+                            <label class="control-label"> Surname</label>
+                            <input class="form-control floating" type="text" name="surname" required>
                         </div>
+
                         <div class="form-group form-focus">
                             <label class="control-label">Email</label>
                             <input class="form-control floating" type="email" name="email" required>
                         </div>
                         <div class="form-group form-focus">
-                            <label class="control-label">Tel</label>
-                            <input class="form-control floating" type="number" name="tel" required>
+                            <label class="control-label">Phonenumber</label>
+                            <input class="form-control floating" type="number" name="phonenumber" required>
                         </div>
                         <div class="form-group form-focus">
-                            <label class="control-label">Location</label>
-                            <select class="form-control floating" name="location">
-                                <option>Harare</option>
-                                <option>Gweru</option>
-                                <option>Bulawayo</option>
-                            </select>
+                            <label class="control-label">Token</label>
+                            <input class="form-control floating" type="text" name="token" required>
                         </div>
-                        <div class="form-group form-focus">
-                            <label class="control-label">Ecocash Number/Code</label>
-                            <input class="form-control floating" type="number" name="ecocash" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Logo</label>
-                            <input class="form-control floating" type="file" name="logo" required>
-                        </div>
+
                         <div class="form-group form-focus">
                             <label class="control-label">Password</label>
                             <input class="form-control floating" type="password" name="password" required>
+                        </div>
+                        <div class="form-group form-focus">
+                            <label class="control-label">Confirm Password</label>
+                            <input class="form-control floating" type="password" name="confirm_password" required>
                         </div>
                         <div class="form-group text-center">
                             <button class="btn btn-primary btn-block account-btn" type="submit">Register</button>

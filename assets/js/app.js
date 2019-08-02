@@ -30,10 +30,6 @@
 
 $(document).ready(function() {
 	
-	// Sidebar Initiate
-	
-	$.Sidemenu.init();
-	
 	// Sidebar overlay
 
 	var $sidebarOverlay = $(".sidebar-overlay");
@@ -58,6 +54,11 @@ $(document).ready(function() {
 		}
 		e.preventDefault();
 	});
+
+	
+	// Sidebar Initiate
+	
+	$.Sidemenu.init();
 	
 	// Theme Settings
 	
@@ -178,13 +179,11 @@ $(document).ready(function() {
 		});
 	}
 	
-	// Tooltip
+	// Button Switch
 
 	if($('[data-toggle="tooltip"]').length > 0 ){
 		$('[data-toggle="tooltip"]').tooltip();
 	}
-	
-	// Button Switch
 
 	if($('.btn-toggle').length > 0 ){
 		 $('.btn-toggle').click(function() {
@@ -215,9 +214,9 @@ $(document).ready(function() {
 			return false;
 		});
 	}
-
-	// Message box remove
 	
+	// Message box remove
+
 	if($('.dropdown-toggle').length > 0 ){
 		 $('.dropdown-toggle').click(function() {
 			if ($('.main-wrapper').hasClass('open-msg-box')){

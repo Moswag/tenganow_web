@@ -5,7 +5,7 @@
         </a>
     </div>
     <div class="page-title-box pull-left">
-        <h3>Tenga Now</h3>
+        <h3>RELiER</h3>
     </div>
     <a id="mobile_btn" class="mobile_btn pull-left" href="#sidebar"><i class="fa fa-bars" aria-hidden="true"></i></a>
     <ul class="nav navbar-nav navbar-right user-menu pull-right">
@@ -84,9 +84,14 @@
 
         <li class="dropdown">
             <a href="profile.html" class="dropdown-toggle user-link" data-toggle="dropdown" title="Admin">
-							<span class="user-img"><img class="img-circle" src="{{auth()->user()->logo}}" width="40" >
+                @if(auth()->user()->image==NULL)
+                    <span class="user-img"><img class="img-circle" src="{{URL::to('assets/img/user.jpg')}}" width="40" >
+                    @else
+                    <span class="user-img"><img class="img-circle" src="{{auth()->user()->image}}" width="40" >
+                    @endif
+
 							<span class="status online"></span></span>
-                <span>{{auth()->user()->company_name}}</span>
+                <span>{{auth()->user()->name}}</span>
                 <i class="caret"></i>
             </a>
             <ul class="dropdown-menu">

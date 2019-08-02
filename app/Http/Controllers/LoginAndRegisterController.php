@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
+use App\Company;
+use App\MyConstants;
+use App\RelierToken;
 use App\User;
+use foo\bar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,33 +45,83 @@ class LoginAndRegisterController extends Controller
      */
     public function store(Request $request)
     {
-        $image=$request->file('logo');
-        $input['imagename']=$image->getClientOriginalName();
-        $extension=$image->getClientOriginalExtension();
-        $myfile=bcrypt($input['imagename']).'.'.$extension;
-        $destination = 'companylogo';
-        $image->storeAs($destination, $myfile);
+        $userExists=User::where('email',$request->email)->exists();
+        if($userExists){
+            return back()->with('error','User already registered, please login to proceed');
+        }
+        else{
+            $tokenValid=RelierToken::where('token',$request->token)->exists();
+            if($tokenValid){
+                $token=RelierToken::where('token',$request->token)->get();
+                foreach ($token as $k){
+                    $tok_status=$k->status;
+                    $comp=$k->company;
+                }
+                $company=Company::where('name',$comp)->get();
+                foreach ($company as $c){
+                    $cmp_image=$c->imageUrl;
+                    $cmp_name=$c->name;
+                    $cmpid=$c->id;
+                }
+                if($tok_status==MyConstants::TOKEN_UNUSED){
+                    $user=new User();
+                    $user->name=$request->name.' '.$request->surname;
+                    $user->email=$request->email;
+                    $user->role=MyConstants::USER_COMPANY_ADMIN;
+                    $user->image=$cmp_image;
+                    $user->company_or_outlet_id=$cmpid;
+                    $user->password=bcrypt($request->password);
+                    if($user->save()){
+                        $admin=new Admin();
+                        $admin->name=$request->name;
+                        $admin->surname=$request->surname;
+                        $admin->email=$request->email;
+                        $admin->phonenumber=$request->phonenumber;
+                        $admin->role=MyConstants::USER_COMPANY_ADMIN;
+                        if($admin->save()){
+                            return redirect()->route('login')->with('message',$cmp_name.' Admin successfully registered, you can login now');
+                        }
+                        else{
+                            return back()->with('error','Failed to add company admin, please contact admin');
+                        }
+
+                    }
+                    else{
+                        return back()->with('error','Failed to add user, please contact admin');
+                    }
+                }
+                else{
+                    return back()->with('error','Token already used, please contact admin '.$tok_status);
+                }
+            }
+            else{
+                return back()->with('error','Token do not exists, please contact admin');
+            }
 
 
-        $user=new User();
-        $user->company_name=$request->name;
-        $user->company_address=$request->address;
-        $user->email=$request->email;
-        $user->location=$request->location;
-        $user->company_address=$request->address;
-        $user->ecocash=$request->ecocash;
-        $user->logo='http://localhost/tenganow/storage/app/'.$destination.'/'.$myfile;
-        $user->tel=$request->tel;
-        $user->password=bcrypt($request->password);
-        $user->status='pending';
-        $user->save();
-        return redirect()->route('login')->with('message','Company successfully registered, you will receive an email when the company has been verified');
+        }
+
+
+
     }
 
     public function login(Request $request){
 
         if(Auth::attempt(['email'=>$request->email,'password'=>$request->password])){
-            return redirect()->route('view_products');
+            if(auth()->user()->role=='relier_admin'){
+                return redirect()->route('view_products');
+            }
+            else if(auth()->user()->role=='company_admin'){
+                return redirect()->route('view_products');
+            }
+            else if(auth()->user()->role=='outlet_admin'){
+                return redirect()->route('view_products');
+            }
+            else if(auth()->user()->role=='outlet_operator'){
+                return redirect()->route('view_products');
+            }
+
+
         }
         else{
             return back()->with('error','Wrong credentials please try again');

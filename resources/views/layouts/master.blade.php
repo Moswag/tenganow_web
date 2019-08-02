@@ -19,5 +19,16 @@
 <script type="text/javascript" src="{{URL::to('assets/js/moment.min.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/js/bootstrap-datetimepicker.min.js')}}"></script>
 <script type="text/javascript" src="{{URL::to('assets/js/app.js')}}"></script>
+
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 </body>
 </html>
