@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <link rel="shortcut icon" type="image/x-icon" href="{{URL::to('assets/img/favicon.png')}}">
-    <title>Tenga Now</title>
+    <title>RELiER</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{URL::to('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::to('assets/css/font-awesome.min.css')}}">
@@ -24,7 +24,7 @@
             <div class="account-box">
                 <div class="account-wrapper">
                     <div class="account-logo">
-                        <a href="index-2.html"><img src="{{URL::to('assets/img/logo2.png')}}" alt="Tenga Now"></a>
+                        <a href="index-2.html"><img src="{{URL::to('assets/img/relier_round.png')}}" alt="Tenga Now"></a>
                     </div>
                     @if(Session::has('message'))
                         <div class="alert alert-success">  {{Session::get('message')}}        </div>

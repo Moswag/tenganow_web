@@ -54,7 +54,6 @@
                                 <th style="width:20%;">Address</th>
                                 <th>City</th>
                                 <th>Tel</th>
-                                <th>Ecocash</th>
                                 <th class="text-right">Action</th>
                             </tr>
                             </thead>
@@ -67,14 +66,13 @@
                                     <td>{{$outlet->company}}</td>
                                     <td>{{$outlet->address}}</td>
                                     <td>{{$outlet->city}}</td>
-                                    <td>{{$outlet->tel}}</td>
-                                    <td><a class="btn btn-xs btn-primary">{{$outlet->ecocash_merchant}}</a></td>
+                                    <td><a class="btn btn-xs btn-primary">{{$outlet->tel}}</a></td>
                                     <td class="text-right">
                                         <div class="dropdown">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                             <ul class="dropdown-menu pull-right">
-                                                <li><a href="#" data-toggle="modal" data-target="#edit_salary" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                                <li><a href="{{route('delete_relier_admin',['id'=>$outlet->id])}}"   title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                                <li><a href="{{route('admin_edit_outlet',['id'=>$outlet->id])}}"  title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                                                <li><a href="{{route('admin_delete_outlet',['id'=>$outlet->id])}}"   title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -122,19 +120,11 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label>Ecocash</label>
-                                <input class="form-control" type="number" name="ecocash" placeholder="Enter ecocash" required>
+                                <label>Tel</label>
+                                <input class="form-control" type="number" name="tel" placeholder="Enter Outlet Tel" required>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Tel</label>
-                                    <input class="form-control" type="number" name="tel" placeholder="Enter Outlet Tel" required>
-                                </div>
-                            </div>
 
-                        </div>
 
                         <div class="m-t-20 text-center">
                             <button class="btn btn-primary">Create Outlet</button>

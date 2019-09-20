@@ -3,41 +3,69 @@
     <div class="page-wrapper">
         <div class="content container-fluid">
             <div class="row">
-                <div class="col-sm-8">
-                    <h4 class="page-title">Order Pending</h4>
+                <div class="col-xs-4">
+                    <h4 class="page-title">Pending Order</h4>
                 </div>
 
+            </div>
+            <div class="row filter-row">
+                    <div class="col-sm-3 col-md-2 col-xs-6">
+
+                        </div>
+                        <div class="col-sm-3 col-md-2 col-xs-6">
+
+                        </div>
+                        <div class="col-sm-3 col-md-2 col-xs-6">
+
+                        </div>
+                        <div class="col-sm-3 col-md-2 col-xs-6">
+
+                        </div>
+                        <div class="col-sm-3 col-md-2 col-xs-6">
+
+                        </div>
+
+                        <div class="col-sm-3 col-md-2 col-xs-6">
+                            <div class="form-group form-focus">
+                                <label class="control-label">Search</label>
+                                <input type="text" id="myInput" class="form-control floating" />
+                            </div>
+                        </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
-                        <table class="table table-striped custom-table m-b-0">
+                        <table class="table table-striped custom-table datatable">
                             <thead>
                             <tr>
+                                <th style="width:30%;">Order</th>
                                 <th>Order Number</th>
-                                <th>Order </th>
-                                <th>Reference</th>
-                                <th>Delivery</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Pickup Time</th>
+                                <th>Payment Status</th>
                                 <th class="text-right">Action</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="myTable">
 
                             @foreach($orders as $order)
-
-                            <tr class="holiday-upcoming">
-                                <td>{{$order->order_num}}</td>
-                                <td>{{$order->order}}</td>
-                                <td>{{$order->reference}}</td>
-                                <td>No</td>
+                            <tr>
+                                <td>
+                                    <a href="#" class="avatar">{{$order->order}}</a>
+                                    <h2><a href="#">{{$order->order}}</a></h2>
+                                </td>
+                                <td>{{$order->id}}</td>
+                                <td>{{$order->customer_name}}</td>
+                                <td>{{$order->amount}}</td>
+                                <td>{{$order->pickuptime}}</td>
+                                <td>{{$order->status}}</td>
                                 <td class="text-right">
-                                    <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" data-toggle="modal" data-target="#edit_holiday" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#delete_holiday" title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                        </ul>
-                                    </div>
+                                    @if($order->status=='Paid')
+                                    <a class="btn btn-xs btn-primary" href="{{route('proces_order',['id'=>$order->id])}}">Process</a>
+                                    @else
+                                    <a class="btn btn-xs btn-danger" href="#">Check Payment</a>
+                                    @endif
                                 </td>
                             </tr>
                                 @endforeach
@@ -50,4 +78,5 @@
         </div>
 
     </div>
-   @endsection
+
+    @endsection

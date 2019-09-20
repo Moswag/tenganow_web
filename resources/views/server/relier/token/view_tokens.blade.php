@@ -69,8 +69,7 @@
                                         <div class="dropdown">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                             <ul class="dropdown-menu pull-right">
-                                                <li><a href="#" data-toggle="modal" data-target="#edit_salary" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                                <li><a href="{{route('delete_relier_admin',['id'=>$token->id])}}"   title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                                <li><a href="{{route('delete_token',['id'=>$token->id])}}"   title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                             </ul>
                                         </div>
                                     </td>

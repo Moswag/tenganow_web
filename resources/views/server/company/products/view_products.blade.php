@@ -36,11 +36,11 @@
                 <div class="dropdown profile-action">
                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                        <li><a href="{{route('edit_product',['id'=>$product->id])}}"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
+                        <li><a href="{{route('delete_product',['id'=>$product->id])}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                     </ul>
                 </div>
-                <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="profile.html">{{$product->name}}</a></h4>
+                <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="">{{$product->name}}</a></h4>
 
 
                 <br/>
@@ -91,20 +91,20 @@
                                 <input class="form-control" type="number" name="code" required>
                             </div>
                         </div>
+
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Description <span class="text-danger">*</span></label>
+                                <textarea class="form-control"  name="description" required></textarea>
+                            </div>
+                        </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Discount</label>
                                 <input class="form-control" type="number" name="discount" required>
                             </div>
                         </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="control-label">Description <span class="text-danger">*</span></label>
-                                <textarea class="form-control"  name="description" required></textarea>
-                            </div>
-                        </div>
-
                             </tbody>
                         </table>
                     </div>

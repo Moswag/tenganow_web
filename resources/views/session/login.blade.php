@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from dreamguys.co.in/smarthr/blue/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 13 Oct 2018 21:02:20 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <link rel="shortcut icon" type="image/x-icon" href="{{URL::to('assets/img/favicon.png')}}">
-    <title>Tenga Now</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{URL::to('assets/img/relier_round.png')}}">
+    <title>RELiER</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{URL::to('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::to('assets/css/font-awesome.min.css')}}">
@@ -20,18 +20,18 @@
 <div class="main-wrapper">
     <div class="account-page">
         <div class="container">
-            <h3 class="account-title">Tenga Now</h3>
+            <h3 class="account-title">RELiER</h3>
             <div class="account-box">
                 <div class="account-wrapper">
                     <div class="account-logo">
-                        <a href="index-2.html"><img src="{{URL::to('assets/img/logo2.png')}}" alt="Tenga Now"></a>
+                        <a href=""><img src="{{URL::to('assets/img/relier_round.png')}}" alt="Relier" ></a>
                     </div>
 
                         @if(Session::has('message'))
                         <div class="alert alert-success">  {{Session::get('message')}}        </div>
                     @endif
                     @if(Session::has('error'))
-                        <div class="alert alert-success">  {{Session::get('error')}}        </div>
+                        <div class="alert alert-danger">  {{Session::get('error')}}        </div>
                     @endif
                     <form method="post" action="{{route('signin')}}">
                         {{csrf_field()}}
@@ -47,10 +47,10 @@
                             <button class="btn btn-primary btn-block account-btn" type="submit">Login</button>
                         </div>
                         <div class="text-center">
-                            <a href="forgot-password.html">Forgot your password?</a>
+                            <!--<a href="forgot-password.html">Forgot your password?</a>-->
                         </div>
                         <div class="text-center">
-                            <h4>Not registered yet?<a href="{{route('signup')}}" style="background-color: #00b7ed"> Create Account</a></h4>
+                            <h4>Do you have a company token?<a href="{{route('signup')}}" style="background-color: #9371c9"> Create Account</a></h4>
                         </div>
                     </form>
                 </div>

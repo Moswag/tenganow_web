@@ -78,7 +78,11 @@ class LoginAndRegisterController extends Controller
                         $admin->email=$request->email;
                         $admin->phonenumber=$request->phonenumber;
                         $admin->role=MyConstants::USER_COMPANY_ADMIN;
+                        $admin->company_or_outlet_id=$cmpid;
                         if($admin->save()){
+                            RelierToken::where('token',$request->token)->update([
+                                'status'=>MyConstants::TOKEN_USED
+                            ]);
                             return redirect()->route('login')->with('message',$cmp_name.' Admin successfully registered, you can login now');
                         }
                         else{
@@ -108,16 +112,16 @@ class LoginAndRegisterController extends Controller
     public function login(Request $request){
 
         if(Auth::attempt(['email'=>$request->email,'password'=>$request->password])){
-            if(auth()->user()->role=='relier_admin'){
+            if(auth()->user()->role==MyConstants::USER_RELIER_ADMIN){
+                return redirect()->route('view_companies');
+            }
+            else if(auth()->user()->role==MyConstants::USER_COMPANY_ADMIN){
                 return redirect()->route('view_products');
             }
-            else if(auth()->user()->role=='company_admin'){
-                return redirect()->route('view_products');
+            else if(auth()->user()->role==MyConstants::USER_OUTLET_ADMIN){
+                return redirect()->route('view_outlet_products');
             }
-            else if(auth()->user()->role=='outlet_admin'){
-                return redirect()->route('view_products');
-            }
-            else if(auth()->user()->role=='outlet_operator'){
+            else if(auth()->user()->role==MyConstants::USER_OUTLET_OPERATOR){
                 return redirect()->route('view_products');
             }
 

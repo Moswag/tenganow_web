@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Api\Payments;
 
+use App\Customer;
 use App\Http\Controllers\Controller;
+use App\Order;
+use App\Outlet;
+use App\OutletPaynow;
 use App\Transaction;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -21,12 +25,16 @@ class PaynowController extends Controller
      */
     protected $paynow = null;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
+        //$id=1;
         // TODO: Maybe bind an instance of this class on Laravel's IoC container and use dependency injection?
+        $ouletPaynow=OutletPaynow::find($request->outlet_id);
+
+
         $this->paynow = new Paynow(
-            config('paynow.INTEGRATION_ID'),
-            config('paynow.INTEGRATION_KEY'),
+            $ouletPaynow->integrationId,
+            $ouletPaynow->integrationKey,
             url('/'),
             url('/')
         );
@@ -49,7 +57,7 @@ class PaynowController extends Controller
         ]);
 
         // Get the payer's email address
-        $email = $request->has('email') ? $request->input('email') : 'devnull@mailinator.com';
+        $email = $request->has('email') ? $request->input('email') : 'webstermoswa11@gmail.com';
 
         // Get the payer's phone number
         $phone = $request->input('phone');
@@ -57,12 +65,16 @@ class PaynowController extends Controller
         // Get the amount of the transaction
         $amount = floatval($request->input('amount'));
 
+
+
         // Create a transaction instance
         $transaction = Transaction::create($request->except(['_token', 'phone', 'email']));
 
         // Set the user's phone as the transaction's instrument
         $transaction->instrument = $phone;
         $transaction->save();
+
+
 
         // Check if transaction was created without any errors
         if (!$transaction) {
@@ -94,9 +106,34 @@ class PaynowController extends Controller
             $transaction->poll_url = $response->pollUrl();
             $transaction->save();
 
+            //Save order
+            $customer=Customer::find($request->phone);
+            $outlet=Outlet::find($request->outlet_id);
+            $order=new Order();
+            $order->customer_name=$customer->name;
+            $order->phonenumber=$request->phone;
+            $order->order=$request->order;
+            $order->amount=$amount;
+            $order->transaction_id=$transaction->id;
+            $order->paid=0;
+            $order->outlet_id=$outlet->id;
+            $order->company_name=$outlet->company.' '.$outlet->city;
+            $order->status='Pending';
+            $order->with_delivery=$request->with_delivery;
+            if($request->with_delivery=="true"){
+                $order->address=$request->address_or_time;
+            }
+            else {
+                $order->pickuptime=$request->address_or_time;
+            }
+            $order->status='Pending';
+            $order->save();
+
             // Return the response
             return response()->json([
                 'status' => 'success',
+                'order_number' => $order->id,
+                'outlet_id' => $order->outlet_id,
                 'message' => $response->instructions(),
                 'transaction' => $transaction
             ]);
@@ -137,6 +174,12 @@ class PaynowController extends Controller
             // Try to poll the transaction
             $status = $this->paynow->pollTransaction($transaction->poll_url);
 
+                Order::where('transaction_id',$request->transaction)->update([
+                    'paid'=>$status->paid(),
+                    'status' => $status->paid() ? 'Paid' : 'Awaiting payment'
+                ]);
+
+
             // Return transaction status
             return response()->json([
                 'status' => $status->paid() ? 'Paid' : 'Awaiting payment'
@@ -152,6 +195,36 @@ class PaynowController extends Controller
         }
     }
 
+
+
+    public function getMyOders(Request $request){
+    $orders=Order::where('phonenumber',$request->phonenumber)->orderBy('id','desc')->get();
+    foreach ($orders as $order){
+        // Find a transaction matching the given transaction id
+        $transaction = Transaction::findOrFail($order->transacton_id);
+        try {
+            // Try to poll the transaction
+            $status = $this->paynow->pollTransaction($transaction->poll_url);
+
+            Order::where('transaction_id',$request->transaction)->update([
+                'paid'=>$status->paid(),
+                'status' => $status->paid() ? 'Approved' : 'Awaiting payment kk'
+            ]);
+
+
+
+        } catch (Exception $e) {
+            // Log out the error
+            logger()->error($e->getMessage() . "\t\t" . $e->getTraceAsString());
+
+
+        }
+    }
+
+
+
+
+}
     /**
      * When a transaction is paid for, run the actions specified on the Transaction record
      *

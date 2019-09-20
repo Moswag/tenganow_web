@@ -23,15 +23,27 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1'], function() {
     });
 
 
+
+    Route::group(['namespace' => 'Customer'],function () {
+        Route::post('/customer_login', 'APIController@customerLogin');
+        Route::post('/customer_register', 'APIController@customerRegister');
+        Route::post('/getMyOders', 'APIController@getMyOders');
+        Route::post('/reset_password_phone', 'APIController@forgotPasswordPhone');
+        Route::post('/reset_password_new_password', 'APIController@resetPasswordNew');
+        Route::get('/getCompanies', 'APIController@getCompanies');
+        Route::get('/getCities', 'APIController@getCities');
+        Route::get('/getOutlets', 'APIController@getOutlets');
+        Route::post('/getProducts', 'APIController@getProducts');
+        Route::post('/placeOrder', 'APIController@placeOrder');
+        Route::post('/referenceNumber', 'APIController@referenceNumber');
+        Route::get('/promotions', 'APIController@viewPromotions');
+        Route::post('/deliveryPrice', 'APIController@getDeliveryPrice');
+
+    });
+
+
 });
 
-Route::post('/customer_login', 'APIController@customerLogin');
-Route::post('/customer_register', 'APIController@customerRegister');
-Route::get('/getCompany', 'APIController@getCompanies');
-Route::post('/getOutlets', 'APIController@getOutlets');
-Route::post('/getProducts', 'APIController@getProducts');
-Route::post('/placeOrder', 'APIController@placeOrder');
-Route::post('/referenceNumber', 'APIController@referenceNumber');
-Route::post('/getMyOders', 'APIController@getMyOders');
+
 
 

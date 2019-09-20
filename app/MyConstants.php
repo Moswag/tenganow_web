@@ -19,7 +19,7 @@ class MyConstants
     const USER_CUSTOMER='customer';
 
 
-    const PATH_URL='http://192.168.1.4/tenganow/storage/app/';
+    const PATH_URL='http://localhost/relier/storage/app/';
 
 
     const DIRECTORY_USER_PICS='product_pics';

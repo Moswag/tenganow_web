@@ -4,7 +4,7 @@
         <div class="content container-fluid">
             <div class="row">
                 <div class="col-xs-4">
-                    <h4 class="page-title">Outlets</h4>
+                    <h4 class="page-title">{{$company->name}} Outlets</h4>
                 </div>
             </div>
 
@@ -50,10 +50,8 @@
                                 <th>Company Name</th>
                                 <th>Address</th>
                                 <th>City</th>
-                                <th>Ecocash</th>
                                 <th>Tel</th>
-                                <th>Working Hours</th>
-                                <th class="text-right">Action</th>
+                                <th>Working Hour</th>
                             </tr>
                             </thead>
                             <tbody id="myTable">
@@ -65,18 +63,8 @@
                                     <td>{{$outlet->company}}</td>
                                     <td>{{$outlet->address}}</td>
                                     <td>{{$outlet->city}}</td>
-                                    <td>{{$outlet->ecocash_merchant}}</td>
                                     <td>{{$outlet->tel}}</td>
                                     <td><a class="btn btn-xs btn-primary">{{$outlet->working_hours}}</a></td>
-                                    <td class="text-right">
-                                        <div class="dropdown">
-                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#" data-toggle="modal" data-target="#edit_salary" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                                <li><a href="{{route('delete_relier_admin',['id'=>$outlet->id])}}"   title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
                                 </tr>
 
                             @endforeach

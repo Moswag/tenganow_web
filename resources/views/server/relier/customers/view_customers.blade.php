@@ -57,17 +57,16 @@
                             @foreach($customers as $customer)
                                 <tr>
                                     <td>
-                                        <a href="#" class="avatar">{{$customer->id}}</a>
+                                        <a href="#" class="avatar">{{substr($customer->name,0,1)}}</a>
                                     </td>
                                     <td>{{$customer->name}}</td>
-                                    <td>{{$customer->phonenumber}}</td>
+                                    <td>0{{$customer->phonenumber}}</td>
                                     <td><a class="btn btn-xs btn-primary">{{$customer->status}}</a></td>
                                     <td class="text-right">
                                         <div class="dropdown">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                             <ul class="dropdown-menu pull-right">
-                                                <li><a href="#" data-toggle="modal" data-target="#edit_salary" title="Edit"><i class="fa fa-pencil m-r-5"></i> Edit</a></li>
-                                                <li><a href="{{route('delete_relier_admin',['id'=>$customer->id])}}"   title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
+                                                <li><a href="{{route('delete_customer',['id'=>'0'.$customer->phonenumber])}}"   title="Delete"><i class="fa fa-trash-o m-r-5"></i> Delete</a></li>
                                             </ul>
                                         </div>
                                     </td>
